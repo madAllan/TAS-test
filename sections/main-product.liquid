@@ -407,6 +407,7 @@
                     <button
                       type="submit"
                       name="add"
+                      id="addtocart"      
                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout and product.selling_plan_groups == empty %}button--secondary{% else %}button--primary{% endif %}"
                     {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                     >
@@ -1116,3 +1117,31 @@
   ]
 }
 {% endschema %}
+
+  
+  
+  
+  
+<script type="text/javascript">  
+  
+  
+function showCart(){
+
+document.getElementById('cart_mini_drawer').classList.add('is-visible', 'is-active');
+  
+}
+
+
+let addtocart_btn=document.querySelector('#addtocart');
+
+addtocart_btn.addEventListener('click', showCart);
+
+  
+  
+</script>
+  
+  
+  
+  
+  
+  
