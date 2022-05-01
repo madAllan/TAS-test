@@ -1,0 +1,578 @@
+<!--css styles is in custom_cart.css in asset folder-->
+
+<div id="main_cart">
+
+   
+  
+    <section id="main_cart_top">  
+      
+    <h1 class="cart_page_title">{{section.settings.page_title}}</h1>  
+    
+    <a href="{{section.settings.url}}" class="cart_page_subheading">{{section.settings.title}}</a>  
+      
+    </section>
+    
+    
+      
+    <!--start,outputting individual item for desktop-->  
+      
+    <!--separated output for dekstop and tablet/mobile for responsive purposes-->   
+      
+     <form action="/cart" method="post" novalidate> 
+      
+    <section class="main_cart_content" id="main_cart_desktop" data-ajax-cart-section>  
+      
+    
+      
+      
+    <div class="container-fluid">  
+      
+      
+      
+      
+    <div class="row main_cart_content_titles">  
+      
+      
+      
+      
+    <div class="col-5 col-sm-5 col-md-6 col-lg-6 col-xl-6">  
+      
+    
+      
+      
+      
+    </div>  
+      
+      
+      
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>Price</h3>  
+      
+      
+    </div>   
+      
+      
+      
+    
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>Quantity</h3>  
+      
+      
+    </div> 
+      
+      
+      
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>Total</h3>  
+      
+      
+    </div>   
+      
+      
+      
+      
+      
+      
+    </div>  
+      
+      
+     
+      
+      
+     <!--start cart item content--> 
+      
+      
+     {%for item in cart.items%} 
+      
+      
+    <div class="row align-items-end each_item_row">  
+      
+     
+    <div class="col-3 col-sm-3 col-md-6 col-lg-6 col-xl-6">  
+    
+      
+      
+    <div class="img_and_title">
+      
+    <img src="{{item.image|img_url:'medium'}}" class="item_image"/>
+      
+    <div class="title_and_remove">  
+    
+    <a href="{{item.url}}" class="main_cart_product_title">{{item.title}}</a>
+      <a href="/cart/change?line={{forloop.index}}&amp;quantity=0" data-ajax-cart-request-button  class="remove_item"><h3 class="cart_remove_item">Remove<img class="x_mark_remove" src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Container_1.svg?v=1649972431"/></h3></a>  
+        
+      
+    </div>  
+      
+      
+    </div>
+      
+      
+    </div>  
+      
+      
+      
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>{{item.final_price|money}}</h3> 
+      
+      
+    </div>   
+      
+      
+      
+    
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <div class="quantity_selector">
+    
+      
+    <a href="/cart/change?line={{forloop.index}}&amp;quantity={{item.quantity|minus:1}}" data-ajax-cart-request-button class="quantity_selector_icon"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Container.svg?v=1649861796" id="quantity_minus"/></a> 
+     <input data-ajax-cart-quantity-input="{{ item.key}}" name="updates[]" value="{{ item.quantity }}" type="text" class="output_quantity"/>
+    <a href="/cart/change?line={{forloop.index}}&amp;quantity={{item.quantity|plus:1}}" data-ajax-cart-request-button class="quantity_selector_icon"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Layer_group.svg?v=1649861440" id="quantity_plus"/></a>
+    
+      
+     
+      
+    </div> 
+      
+      
+    </div> 
+      
+      
+      
+    <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>{{item.final_line_price|money}}</h3>  
+      
+      
+    </div>   
+      
+     
+      
+    </div> 
+      
+      
+    {%endfor%}  
+      
+      
+      <!--end cart item content-->  
+      
+      
+     
+      
+    </div>  
+    
+    
+    </section>  
+      
+      
+     <section id="main_cart_footer" class="cart_footer_desktop"> 
+      
+    <div class="container-fluid">  
+      
+    <div class="row">  
+      
+    <div class="main_cart_note col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">  
+     
+      
+     <h3 for="Cart-note" class="order_note">Order note</h3> 
+     
+     <div class="form-floating">
+       
+     
+      <textarea data-ajax-cart-property-input class="form-control main_cart_note" name="note" form="cart" id="Cart-note" placeholder="E.g Thank you" style="height: 100px">{%if cart.note!=blank%}{{ cart.note }}{%else%}E.g Thank you{%endif%}</textarea>
+    
+    </div> 
+      
+     
+      
+    </div>  
+      
+    <!-- <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+      
+    </div>   -->
+    <div class="main_cart_subtotal col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      
+    <div class="subtotal_content_group">  
+    
+    <h3 class="main_cart_subtotal_text">SUBTOTAL:</h3>  
+      
+    <h3 class="items_subtotal_price">{{cart.items_subtotal_price|money}}</h3>   
+      
+    </div>  
+      
+      
+    
+      
+    <h3 class="shipping_text main_cart_shipping">   
+      
+    <small class="tax-note caption-large rte">
+     {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+       {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+     {%- elsif cart.taxes_included -%}
+       {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+     {%- elsif shop.shipping_policy.body != blank -%}
+       {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+     {%- else -%}
+       {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+     {%- endif -%}
+     </small>
+    </h3>   
+      
+      
+      
+    <div class="main_cart_btns">  
+      
+      <button type="submit" name="update" class="cart_update_btn" >update cart</button>  
+    
+    <button type="submit" name="checkout" class="cart_checkout_btn">checkout</button>
+      
+      
+    </div>  
+      
+      
+      
+      
+    </div>  
+      
+      
+    </div>  
+      
+    </div>  
+      
+      
+     
+      
+    </section>  
+       
+     
+      </form>
+      
+    <!--end,outputting individual item for desktop-->    
+      
+    
+      
+    <!--start,outputting individual item for tablet/mobile-->   
+      
+     <form action="/cart" method="post" novalidate> 
+    <section class="main_cart_content" id="main_cart_mobile" data-ajax-cart-section>  
+      
+    
+      
+      
+    <div class="container-fluid">  
+      
+      
+      
+      
+    <div class="row">  
+      
+      
+      
+      
+    <div class="col-5 col-sm-5 col-md-6 col-lg-6 col-xl-6">  
+      
+    
+      
+      
+      
+    </div>  
+      
+    
+      
+     <div class="col-7 col-sm-7 ">  
+      
+    <div class="row">
+      
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+      
+      
+      
+      
+    </div>   
+      
+      
+    
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+    
+    <h3>Total</h3>  
+      
+      
+    </div>   
+      
+      
+      
+    </div>   
+      
+      
+    </div>  
+      
+      
+      
+    </div>  
+      
+     
+     <!--start cart item content--> 
+      
+      
+     {%for item in cart.items%} 
+      
+      
+    <div class="row align-items-end each_item_row">  
+      
+     
+    <div class="col-3 col-sm-3 col-md-6 col-lg-6 col-xl-6">  
+    
+      
+      
+    <div class="img_and_title">
+      
+    <img src="{{item.image|img_url:'medium'}}" class="item_image"/>
+      
+     
+      
+      
+    </div>
+      
+      
+    </div>  
+      
+     
+    <div class="col-9 col-sm-9 mobile_right_content">  
+      
+    <div class="row">
+      
+    <div class="col-7 col-sm-7 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+      
+    <div class="title_and_remove">  
+    
+    <a href="{{item.url}}" class="main_cart_product_title">{{item.title}}</a>
+      
+     
+      <a href="/cart/change?line={{forloop.index}}&amp;quantity=0" data-ajax-cart-request-button  class="remove_item"><h3 class="cart_remove_item">Remove<img class="x_mark_remove" src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Container_1.svg?v=1649972431"/></h3></a>  
+      
+    </div> 
+      
+     
+      
+    </div>   
+      
+      
+     
+      
+      
+    <div class="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2 cart_item_group">  
+      
+      
+    <h3>{{item.final_price|money}}</h3> 
+      
+      
+      
+    <div class="quantity_selector">
+    
+      <a class="quantity_selector_icon" data-ajax-cart-request-button  href="{{routes.cart_change_url}}?id={{item.key}}&quantity={{item.quantity|minus:1}}"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Container.svg?v=1649861796"/></a>  
+     <input data-ajax-cart-quantity-input="{{ item.key}}" name="updates[]" value="{{ item.quantity }}" type="text" class="output_quantity"/>
+      <a class="quantity_selector_icon" data-ajax-cart-request-button  href="{{routes.cart_change_url}}?id={{item.key}}&quantity={{item.quantity|plus:1}}"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Layer_group.svg?v=1649861440"/></a>
+      
+      
+    </div>  
+    
+    <h3>{{item.final_line_price|money}}</h3>  
+      
+      
+    </div>   
+      
+      
+      
+    </div>   
+      
+      
+    </div> 
+      
+      
+    </div>  
+      
+    {%endfor%}  
+      
+      
+      <!--end cart item content-->  
+      
+    
+    </div>  
+    
+      
+      
+      
+     
+      
+    </section>  
+      
+       
+    <section id="main_cart_footer" class="cart_footer_mobile"> 
+      
+    <div class="container-fluid">  
+      
+    <div class="row">  
+      
+    <div class="main_cart_note col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">  
+     
+      
+     <h3 for="Cart-note" class="order_note">Order note</h3> 
+     
+     <div class="form-floating">
+       
+     
+      <textarea data-ajax-cart-property-input class="form-control" name="note" form="cart" id="Cart-note" placeholder="E.g Thank you" style="height: 100px">{%if cart.note!=blank%}{{ cart.note }}{%else%}E.g Thank you{%endif%}</textarea>
+    
+    </div> 
+      
+      
+      
+      
+      
+      
+    </div>  
+      
+    <!-- <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+      
+    </div>   -->
+    <div class="main_cart_subtotal col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      
+    <div class="subtotal_content_group">  
+    
+    <h3 class="main_cart_subtotal_text">SUBTOTAL:</h3>  
+      
+    <h3 class="items_subtotal_price">{{cart.items_subtotal_price|money}}</h3>   
+      
+    </div>  
+      
+      
+    
+      
+    <h3 class="shipping_text main_cart_shipping">   
+      
+    <small class="tax-note caption-large rte">
+     {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+       {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+     {%- elsif cart.taxes_included -%}
+       {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+     {%- elsif shop.shipping_policy.body != blank -%}
+       {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+     {%- else -%}
+       {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+     {%- endif -%}
+     </small>
+    </h3>   
+      
+      
+      
+    <div class="main_cart_btns">  
+      
+      <button type="submit" name="update" class="cart_update_btn" >update cart</button>  
+    
+      <button type="submit" name="checkout" class="cart_checkout_btn">checkout</button>
+      
+      
+    </div>  
+      
+      
+      
+      
+    </div>  
+      
+      
+    </div>  
+      
+    </div>  
+      
+      
+     
+      
+    </section>   
+       
+      
+    </form>
+      
+      
+    <!--end,outputting individual item for tablet/mobile-->  
+    
+      
+     
+      
+     
+    {% schema %}
+    
+    
+    
+      {
+        "name": "Custom Cart Page",
+        "settings": [
+      {
+    
+            "type":"text",
+            "id":"page_title",
+            "label":"Page Title"
+    
+                },
+                {
+    
+            "type":"richtext",
+            "id":"title",
+            "label":"Continue Shopping Text"
+    
+                },{
+    
+            "type":"url",
+            "id":"url",
+            "label":"Continue Shopping Url"
+    
+                }
+    
+    
+    
+    ]
+      }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    {% endschema %} 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
