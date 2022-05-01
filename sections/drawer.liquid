@@ -1,0 +1,179 @@
+<!--css styles is in drawer.css in asset folder-->
+
+
+<section class="drawer" id="cart_mini_drawer" data-drawer-target>
+    <div class="drawer__overlay" data-drawer-close tabindex="-1"></div>
+    <div class="drawer__wrapper" data-ajax-cart-section>
+      <div class="drawer__header">
+        <div class="drawer__title">
+          
+          
+          
+          <h1 class="drawer_title_text"> Cart</h1>
+          
+          
+          
+        </div>
+        <button class="drawer__close" data-drawer-close aria-label="Close Drawer"></button>
+      </div>
+      <div class="drawer__content">
+        
+        
+      
+        
+        
+        
+        
+        
+        
+        
+   {%for item in cart.items%}     
+        
+        
+  <div class="each_cart_item">      
+    
+    
+  <div class="item_details">   
+    
+  <div class="item_image_group">  
+      
+  <img src="{{item.image|img_url:'master'}}" class="img-fluid item_image"/>  
+  
+  </div>  
+  
+  <div class="item_title_quantity">  
+      
+  <a href="{{item.url}}" class="item_title_text">{{item.title}}</a> 
+    
+    
+    
+    
+  <div class="quantity_selector quantity_selector_minicart">
+  
+    <a class="quantity_selector_icon" data-ajax-cart-request-button  href="{{routes.cart_change_url}}?id={{item.key}}&quantity={{item.quantity|minus:1}}"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Container.svg?v=1649861796"/></a>  
+   <input data-ajax-cart-quantity-input="{{ item.key}}" name="updates[]" value="{{ item.quantity }}" type="text" class="output_quantity"/>
+    <a class="quantity_selector_icon" data-ajax-cart-request-button  href="{{routes.cart_change_url}}?id={{item.key}}&quantity={{item.quantity|plus:1}}"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Layer_group.svg?v=1649861440"/></a>
+    
+    
+  </div>  
+    
+    
+  
+  </div>   
+    
+    
+    
+  </div>    
+    
+    
+    
+    
+    
+  <div class="item_price">
+    
+  <a class="remove_item_icon" data-ajax-cart-request-button  href="{{routes.cart_change_url}}?id={{item.key}}&quantity=0"><img src="https://cdn.shopify.com/s/files/1/0591/6452/4601/files/Layer_group.svg?v=1649861440"/></a>
+     
+  <h3 class="item_final_price">{{item.final_price|money}}</h3>  
+    
+  </div>  
+        
+  </div>      
+        
+  {%endfor%}   
+        
+        
+        
+        
+  </div>
+      
+   
+   <div class=" drawer_footer">   
+      
+  <h3 for="Cart-note" class="order_note">Order note</h3> 
+   
+   <div class="form-floating">
+     
+   
+    <textarea data-ajax-cart-property-input class="form-control mini_cart_note" name="note" form="cart" id="Cart-note" placeholder="E.g Thank you" style="height: 100px">{%if cart.note!=blank%}{{ cart.note }}{%else%}E.g Thank you{%endif%}</textarea>
+  
+  </div>  
+     
+    
+     
+     
+     
+     
+  <div class="subtotal_group">   
+     
+     
+  <div class="subtotal_text_amount"> 
+  
+  <h3 class="subtotal_text">SUBTOTAL</h3>
+    
+  
+    
+  <h3 class="items_subtotal_price">{{cart.items_subtotal_price|money}}</h3>  
+    
+    
+  </div>
+     
+     
+    
+    
+    
+    
+    
+    
+    
+    
+  <h3 class="shipping_text">   
+    
+  <small class="tax-note caption-large rte">
+   {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+     {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+   {%- elsif cart.taxes_included -%}
+     {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+   {%- elsif shop.shipping_policy.body != blank -%}
+     {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+   {%- else -%}
+     {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+   {%- endif -%}
+   </small>
+  </h3>  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <a href="/cart" class="checkout_btn">Checkout</a>  
+     
+  </div>  
+     
+     
+     
+     
+     
+     
+     
+  </div>
+      
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </section>
+  
